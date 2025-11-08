@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, varchar } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
     id: text("id").primaryKey(),
@@ -8,6 +8,12 @@ export const user = pgTable("user", {
         .$defaultFn(() => false)
         .notNull(),
     image: text("image"),
+    role: varchar("role", { enum: ["teacher", "student", "admin"] }).default("student").notNull(),
+    nisnId: text("nisn_id").unique(), // Student ID/NISN
+    dateOfBirth: timestamp("date_of_birth"),
+    phoneNumber: text("phone_number"),
+    school: text("school"),
+    grade: text("grade"),
     createdAt: timestamp("created_at")
         .$defaultFn(() => /* @__PURE__ */ new Date())
         .notNull(),
